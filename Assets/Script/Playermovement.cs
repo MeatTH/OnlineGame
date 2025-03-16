@@ -1,4 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
+using TMPro;
+using Unity.Collections;
+using UnityEngine;
+using Unity.Netcode;
+using System.Globalization;
 
 public class Playermovement : MonoBehaviour
 {
@@ -6,6 +12,9 @@ public class Playermovement : MonoBehaviour
     public float jumpForce = 7f;
     public bool isLeft = false;
     //public LayerMask groundLayer;
+
+    private NetworkVariable<int> postX = new NetworkVariable<int>(0,
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
@@ -17,8 +26,10 @@ public class Playermovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+
     void Update()
     {
+        
         Move();
         Jump();
     }
